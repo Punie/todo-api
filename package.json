@@ -1,0 +1,11 @@
+{
+  "name": "todo-api",
+  "version": "1.0.0",
+  "description": "Todo API with node.js and mongodb",
+  "main": "index.js",
+  "scripts": {
+    "test": "export NODE_ENV=test || SET NODE_ENV=test && mocha server/**/*.test.js"
+  },
+  "author": "Hugo Saracino",
+  "license": "ISC"
+}
