@@ -1,4 +1,4 @@
-const expect = require('expect');
+const { expect } = require('chai');
 const request = require('supertest');
 const { ObjectID } = require('mongodb');
 
@@ -26,7 +26,7 @@ describe('GET /todos', () => {
       .get('/todos')
       .expect(200)
       .expect(res => {
-        expect(res.body.todos.length).toBe(2);
+        expect(res.body.todos).to.have.lengthOf(2);
       })
       .end(done);
   });
@@ -40,7 +40,7 @@ describe('GET /todos/:id', () => {
       .get(`/todos/${todos[0]._id.toHexString()}`)
       .expect(200)
       .expect(res => {
-        expect(res.body.todo.text).toBe(todos[0].text)
+        expect(res.body.todo.text).to.equal(todos[0].text)
       })
       .end(done);
   });
@@ -71,7 +71,7 @@ describe('POST /todos', () => {
       .send({ text })
       .expect(200)
       .expect(res => {
-        expect(res.body.text).toBe(text);
+        expect(res.body.text).to.equal(text);
       })
       .end((err, res) => {
         if (err) {
@@ -81,8 +81,8 @@ describe('POST /todos', () => {
         Todo
           .find({ text })
           .then(todos => {
-            expect(todos.length).toBe(1);
-            expect(todos[0].text).toBe(text);
+            expect(todos).to.have.lengthOf(1);
+            expect(todos[0].text).to.equal(text);
             done();
           })
           .catch(e => done(e));
@@ -102,7 +102,7 @@ describe('POST /todos', () => {
         Todo
           .find()
           .then(todos => {
-            expect(todos.length).toBe(2);
+            expect(todos).to.have.lengthOf(2);
             done();
           })
           .catch(e => done(e));
@@ -113,14 +113,28 @@ describe('POST /todos', () => {
 
 describe('DELETE /todos/:id', () => {
 
-  it('should return todo doc', done => {
+  it('should remove a todo', done => {
+    const id = todos[0]._id.toHexString();
+
     request(app)
-      .delete(`/todos/${todos[0]._id.toHexString()}`)
+      .delete(`/todos/${id}`)
       .expect(200)
       .expect(res => {
-        expect(res.body.todo.text).toBe(todos[0].text)
+        expect(res.body.todo.text).to.equal(todos[0].text)
       })
-      .end(done);
+      .end((err, res) => {
+        if (err) {
+          return done(err);
+        }
+
+        Todo
+          .findById(id)
+          .then(todo => {
+            expect(todo).to.not.exist;
+            done();
+          })
+          .catch(e => done(e))
+      });
   });
 
   it('should return 404 if todo not found', done => {
