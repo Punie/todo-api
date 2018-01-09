@@ -31,7 +31,7 @@ app.get('/todos/:id', (req, res) => {
 
   Todo
     .findById(id)
-    .then(todo => todo => todo ? res.send({ todo }) : res.status(404).send())
+    .then(todo => todo ? res.send({ todo }) : res.status(404).send())
     .catch(err => res.status(400).send());
 });
 
@@ -63,7 +63,7 @@ app.patch('/todos/:id', (req, res) => {
 
   Todo
     .findByIdAndUpdate(id, { $set: body }, { new: true })
-    .then(todo => todo => todo ? res.send({ todo }) : res.status(404).send())
+    .then(todo => todo ? res.send({ todo }) : res.status(404).send())
     .catch(e => res.status(400).send());
 });
 
