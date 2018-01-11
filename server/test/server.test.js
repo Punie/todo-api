@@ -1,6 +1,6 @@
-/* eslint no-undef: 0 */
-/* eslint no-unused-expressions: 0 */
-/* eslint padded-blocks: 0 */
+/* eslint-disable no-undef */
+/* eslint-disable no-unused-expressions */
+/* eslint-disable padded-blocks */
 
 const { expect } = require('chai');
 const request = require('supertest');
