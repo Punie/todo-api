@@ -5,7 +5,7 @@ const authenticate = (req, res, next) => {
 
   User
     .findByToken(token)
-    .then(user => {
+    .then((user) => {
       if (!user) {
         return Promise.reject();
       }
@@ -13,9 +13,9 @@ const authenticate = (req, res, next) => {
       req.user = user;
       req.token = token;
 
-      next();
+      return next();
     })
-    .catch(err => res.status(401).send());
+    .catch(() => res.status(401).send());
 };
 
 module.exports = { authenticate };
