@@ -2,7 +2,9 @@
   "rules": {
     "comma-dangle": ["error", "never"],
     "func-names": 0,
-    "no-underscore-dangle": ["error", { "allow": ["_id"] }]
+    "no-console": 0,
+    "no-underscore-dangle": ["error", { "allow": ["_id"] }],
+    "no-unused-vars": ["error", { "args": "none" }]
   },
   "extends": [
     "airbnb-base"

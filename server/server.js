@@ -30,7 +30,7 @@ app.get('/todos/:id', (req, res) => {
   return Todo
     .findById(id)
     .then(todo => (todo ? res.send({ todo }) : res.status(404).send()))
-    .catch(() => res.status(400).send());
+    .catch(err => res.status(400).send());
 });
 
 app.post('/todos', (req, res) => {
@@ -62,7 +62,7 @@ app.patch('/todos/:id', (req, res) => {
   return Todo
     .findByIdAndUpdate(id, { $set: body }, { new: true })
     .then(todo => (todo ? res.send({ todo }) : res.status(404).send()))
-    .catch(() => res.status(400).send());
+    .catch(err => res.status(400).send());
 });
 
 app.delete('/todos/:id', (req, res) => {
@@ -75,7 +75,7 @@ app.delete('/todos/:id', (req, res) => {
   return Todo
     .findByIdAndRemove(id)
     .then(todo => (todo ? res.send({ todo }) : res.status(404).send()))
-    .catch(() => res.status(400).send());
+    .catch(err => res.status(400).send());
 });
 
 app.post('/users', (req, res) => {
